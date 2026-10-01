@@ -1,13 +1,15 @@
 import { useMemo, useState } from "react";
 import { photoCandidates } from "../utils/photos.js";
+import { useI18n } from "../i18n/useI18n.js";
 import SnoopyImage from "./SnoopyImage.jsx";
 import "./Photo.css";
 
 function Placeholder({ label, hint }) {
+  const { t } = useI18n();
   return (
     <div className="photo__placeholder">
       <SnoopyImage className="photo__placeholder-art" alt="Snoopy" />
-      <span className="photo__placeholder-text">{label ?? "Foto menyusul 🐶🩷"}</span>
+      <span className="photo__placeholder-text">{label ?? t("photo.placeholder")}</span>
       {hint ? <span className="photo__placeholder-hint">{hint}</span> : null}
     </div>
   );

@@ -111,6 +111,20 @@
   gap: 0.6rem;
 }
 
+/* Tombol bahasa di navbar */
+.nav__lang {
+  flex: none;
+}
+
+.nav__lang--drawer {
+  margin-top: 0.85rem;
+  justify-content: center;
+}
+
+.nav__lang--drawer .lang__globe {
+  display: inline;
+}
+
 /* ------------------------------ Burger (HP) ------------------------------ */
 .nav__burger {
   display: none;
@@ -216,6 +230,13 @@
   }
   .nav__cta {
     display: none;
+  }
+  .nav__lang {
+    display: none;
+  }
+  /* Tapi tombol bahasa di dalam drawer tetap tampil */
+  .nav__lang--drawer {
+    display: inline-flex;
   }
   .nav__burger {
     display: block;

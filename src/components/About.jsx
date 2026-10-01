@@ -1,25 +1,8 @@
-import { profile, aboutPhoto } from "../data.js";
+import { aboutPhoto, profile } from "../data.js";
+import { useI18n } from "../i18n/useI18n.js";
 import Reveal from "./Reveal.jsx";
 import Photo from "./Photo.jsx";
 import { Sparkle } from "./Snoopy.jsx";
-
-const ITEMS = [
-  {
-    icon: "🏫",
-    title: "Sekolah",
-    text: `Sekarang aku sekolah di ${profile.school}.`,
-  },
-  {
-    icon: "🥵",
-    title: "Gak tahan tempat panas",
-    text: "Aku gak suka tempat yang panas. Kalau kepanasan, mood-ku bisa berubah seketika, hehe.",
-  },
-  {
-    icon: "🎶",
-    title: "Playlist favorit",
-    text: "Musik favoritku banyak banget, jadi aku taruh playlist-nya aja di kotak sebelah.",
-  },
-];
 
 function SpotifyIcon() {
   return (
@@ -30,22 +13,25 @@ function SpotifyIcon() {
 }
 
 export default function About() {
+  const { t } = useI18n();
+  const items = t("about.items") ?? [];
+
   return (
     <section id="tentang" className="section">
       <div className="container">
         <Reveal className="section-head">
           <span className="eyebrow">
-            <Sparkle className="eyebrow__spark" /> Kenalan dulu yuk
+            <Sparkle className="eyebrow__spark" /> {t("about.eyebrow")}
           </span>
-          <h2>Tentang Aku 🩷</h2>
-          <p>Sedikit cerita tentang Discha yang suka pink, Snoopy, dan hal-hal manis.</p>
+          <h2>{t("about.title")}</h2>
+          <p>{t("about.subtitle")}</p>
         </Reveal>
 
         <div className="about__grid">
           <Reveal className="card about__card" delay={80}>
-            <h3>Hai, aku {profile.fullName}!</h3>
+            <h3>{t("about.cardTitle", { name: profile.fullName })}</h3>
             <ul className="about__list">
-              {ITEMS.map((item) => (
+              {items.map((item) => (
                 <li className="about__item" key={item.title}>
                   <span className="about__icon" aria-hidden="true">
                     {item.icon}
@@ -60,8 +46,8 @@ export default function About() {
 
             <div className="about__music">
               <div className="about__music-note">
-                <strong>🎧 Playlist Spotify-ku</strong>
-                <span>Isinya lagu-lagu yang nemenin hariku. Boleh banget diikuti~</span>
+                <strong>{t("about.playlistLabel")}</strong>
+                <span>{t("about.playlistNote")}</span>
               </div>
               <a
                 className="about__spotify"
@@ -69,7 +55,7 @@ export default function About() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <SpotifyIcon /> Buka Playlist
+                <SpotifyIcon /> {t("about.openPlaylist")}
               </a>
             </div>
           </Reveal>
@@ -77,12 +63,12 @@ export default function About() {
           <Reveal className="about__portrait" delay={160}>
             <Photo
               src={aboutPhoto.src}
-              alt={aboutPhoto.caption || aboutPhoto.alt}
-              caption={aboutPhoto.caption}
+              alt={t("about.title")}
+              caption={t("about.photoCaption")}
               sticker={aboutPhoto.sticker}
               tilt={2}
             />
-            <p className="about__tagline">Sweet treats &amp; sweet dreams 🐶💤</p>
+            <p className="about__tagline">{t("about.tagline")}</p>
           </Reveal>
         </div>
       </div>

@@ -1,18 +1,8 @@
 import { useCallback, useRef, useState } from "react";
+import { useI18n } from "../i18n/useI18n.js";
 import { useFlowers } from "../hooks/useFlowers.js";
 import Flowers from "./Flowers.jsx";
 import SnoopyImage from "./SnoopyImage.jsx";
-
-const BUBBLES = [
-  "Hehe, geli! 🌸",
-  "Bunga buat kamu 🩷",
-  "Snoopy sayang kamu 🐶",
-  "Mekar deh! 🌷",
-  "Pencet lagi dong 🎀",
-  "Wangi banget 💮",
-  "Semangat ya! ✨",
-  "Cup cup cup 🥰",
-];
 
 let bubbleSeq = 0;
 
@@ -21,6 +11,7 @@ let bubbleSeq = 0;
  * Kalau dipencet → muncul bunga-bunga mekar di sekitar kursor. 🌸
  */
 export default function SnoopyPet() {
+  const { t } = useI18n();
   const { flowers, bloom, remove } = useFlowers();
   const [bubble, setBubble] = useState(null);
   const [rings, setRings] = useState([]);
@@ -36,7 +27,9 @@ export default function SnoopyPet() {
       bloom(x, y);
 
       /* balon ucapan random */
-      setBubble({ key: ++bubbleSeq, text: BUBBLES[Math.floor(Math.random() * BUBBLES.length)] });
+      const bubbles = t("pet.bubbles") ?? [];
+      const text = bubbles[Math.floor(Math.random() * bubbles.length)] ?? "";
+      setBubble({ key: ++bubbleSeq, text });
       const t1 = window.setTimeout(() => setBubble(null), 1600);
       timers.current.push(t1);
 
@@ -48,7 +41,7 @@ export default function SnoopyPet() {
       }, 750);
       timers.current.push(t2);
     },
-    [bloom],
+    [bloom, t],
   );
 
   return (
@@ -57,8 +50,8 @@ export default function SnoopyPet() {
         type="button"
         className="snoopy-pet"
         onClick={handleClick}
-        aria-label="Pencet Snoopy untuk lihat bunga"
-        title="Pencet aku! 🌸"
+        aria-label={t("pet.ariaLabel")}
+        title={t("pet.title")}
       >
         {rings.map((r) => (
           <span className="snoopy-pet__ring" key={r} aria-hidden="true" />

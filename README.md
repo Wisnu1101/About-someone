@@ -17,7 +17,8 @@ Interaktif, responsif, dan penuh animasi lucu. Dibuat pakai **React + Vite**.
   - **Animasi muncul** saat halaman di-scroll.
   - **Progress bar** baca di paling atas + navbar yang meng-highlight bagian aktif.
   - Bagian **Kejutan 🎁** yang mengeluarkan pesan manis random.
-- **Bagian**: Tentang, Favorit (**4 makanan**: Dubai Chewy Cookie, Chocoberry, Soto Betawi, Opor · **3 minuman**: Teazzi, Alchemy, Boost), Sahabat (SMP & SMA), Pesan (quotes), Kejutan, Footer.
+- **Bagian**: About, Favorites (**4 foods**: Dubai Chewy Cookie, Chocoberry, Soto Betawi, Opor · **3 drinks**: Teazzi, Alchemy, Boost), Friends (SMP & SMA), Quotes, Surprise, Footer.
+- **Dua bahasa (EN / ID)** 🌐: tampilan utama **English**, ada tombol **EN / ID** di navbar & footer untuk ganti ke Bahasa Indonesia. Pilihan diingat (localStorage).
 - Responsif (HP & desktop) serta menghormati `prefers-reduced-motion`.
 
 ## 🚀 Menjalankan
@@ -57,22 +58,38 @@ Kalau file-nya belum ada, web otomatis menampilkan ilustrasi Snoopy lucu sebagai
 
 ## 🩷 Mengubah Tulisan
 
-Semua teks (nama, sekolah, makanan favorit, quotes, pesan kejutan) ada di **`src/data.js`**.
+**Semua tulisan** (2 bahasa: English & Indonesia) ada di **`src/i18n/translations.js`**.
+- `en` = English (tampilan utama / default)
+- `id` = Bahasa Indonesia
+
+Ubah teks apa saja di sana — kedua bahasa punya struktur kunci yang sama, jadi kalau menambah bagian, tambahkan di **kedua** bahasa.
+Bahasa default diatur lewat `DEFAULT_LANG` (sekarang `"en"`).
+
+> **Catatan:** dua kutipan motivasi (bagian Quotes) sengaja tetap berbahasa **Inggris** di kedua versi bahasa, sesuai permintaan.
+
 Warna tema ada di **`src/index.css`** bagian `:root`.
+Data non-teks (path foto, stiker, link Spotify) ada di **`src/data.js`**.
 
 ## 📁 Struktur
 
 ```
 src/
   App.jsx                  # merangkai semua bagian + efek interaktif
-  data.js                  # semua isi/tulisan
+  data.js                  # path foto, stiker, link Spotify (non-teks)
   index.css                # tema global (pink, font, animasi)
+  i18n/
+    translations.js         # SEMUA tulisan (en + id)
+    LanguageContext.jsx     # provider bahasa + simpan pilihan
+    useI18n.js              # hook t("kunci.teks") di komponen
+    context.js              # React context bahasa
   hooks/
     useReveal.js           # animasi muncul saat scroll
     useFloatingHearts.js   # hati melayang + ledakan klik
     useTrail.js            # jejak kursor
+    useFlowers.js          # bunga bermekaran
   components/
     Navbar / Hero / About / Favorites / Friends / Quotes / Surprise / Footer
+    LanguageToggle.jsx     # tombol ganti bahasa (EN / ID)
     Snoopy.jsx             # ilustrasi SVG cadangan + ikon kecil (hati, jejak kaki, sparkle)
     SnoopyImage.jsx        # gambar Snoopy (foto) + deteksi ekstensi otomatis
     SnoopyPet.jsx          # Snoopy melayang yang bisa dipencet

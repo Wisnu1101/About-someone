@@ -1,21 +1,17 @@
 import { useEffect, useState } from "react";
+import { useI18n } from "../i18n/useI18n.js";
 import SnoopyImage from "./SnoopyImage.jsx";
+import LanguageToggle from "./LanguageToggle.jsx";
 import "./Navbar.css";
 
-const LINKS = [
-  { id: "beranda", label: "Beranda" },
-  { id: "tentang", label: "Tentang" },
-  { id: "favorit", label: "Favorit" },
-  { id: "sahabat", label: "Sahabat" },
-  { id: "pesan", label: "Pesan" },
-];
-
-const ALL_LINKS = [...LINKS, { id: "kejutan", label: "Kejutan 🎁" }];
-
 export default function Navbar() {
+  const { t, lang } = useI18n();
   const [stuck, setStuck] = useState(false);
   const [active, setActive] = useState("beranda");
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const links = t("nav.links") ?? [];
+  const drawerLinks = [...links, { id: "kejutan", label: t("nav.surprise") }];
 
   useEffect(() => {
     const onScroll = () => setStuck(window.scrollY > 24);
@@ -26,7 +22,8 @@ export default function Navbar() {
 
   /* Menandai bagian yang sedang terlihat */
   useEffect(() => {
-    const sections = ALL_LINKS.map((l) => document.getElementById(l.id)).filter(Boolean);
+    const ids = [...links.map((l) => l.id), "kejutan"];
+    const sections = ids.map((id) => document.getElementById(id)).filter(Boolean);
     if (!sections.length || typeof IntersectionObserver === "undefined") return;
 
     const observer = new IntersectionObserver(
@@ -41,7 +38,8 @@ export default function Navbar() {
 
     sections.forEach((s) => observer.observe(s));
     return () => observer.disconnect();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lang]);
 
   /* Tutup menu pakai tombol Esc */
   useEffect(() => {
@@ -59,18 +57,18 @@ export default function Navbar() {
         <a
           className="nav__brand"
           href="#beranda"
-          aria-label="Ke beranda"
+          aria-label={t("nav.toHome")}
           onClick={() => setMenuOpen(false)}
         >
           <span className="nav__brand-avatar">
             <SnoopyImage alt="Snoopy" />
           </span>
-          <span>Discha 🩷</span>
+          <span>{t("nav.brand")}</span>
         </a>
 
-        <nav className="nav__desktop" aria-label="Navigasi utama">
+        <nav className="nav__desktop" aria-label={t("nav.mainNav")}>
           <ul className="nav__links">
-            {LINKS.map((link) => (
+            {links.map((link) => (
               <li key={link.id}>
                 <a
                   className={`nav__link${active === link.id ? " is-active" : ""}`}
@@ -85,8 +83,10 @@ export default function Navbar() {
         </nav>
 
         <div className="nav__right">
+          <LanguageToggle className="nav__lang" />
+
           <a className="btn nav__cta" href="#kejutan">
-            Kejutan <span aria-hidden="true">🎁</span>
+            {t("nav.surprise")}
           </a>
 
           <button
@@ -94,7 +94,7 @@ export default function Navbar() {
             className={`nav__burger${menuOpen ? " is-open" : ""}`}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
-            aria-label={menuOpen ? "Tutup menu" : "Buka menu"}
+            aria-label={menuOpen ? t("nav.closeMenu") : t("nav.openMenu")}
             onClick={() => setMenuOpen((o) => !o)}
           >
             <span />
@@ -106,7 +106,7 @@ export default function Navbar() {
 
       <div id="mobile-menu" className={`nav__drawer${menuOpen ? " is-open" : ""}`}>
         <ul className="nav__drawer-list">
-          {ALL_LINKS.map((link) => (
+          {drawerLinks.map((link) => (
             <li key={link.id}>
               <a
                 className={`nav__link${active === link.id ? " is-active" : ""}`}
@@ -119,6 +119,8 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
+
+        <LanguageToggle className="nav__lang nav__lang--drawer" />
       </div>
     </header>
   );

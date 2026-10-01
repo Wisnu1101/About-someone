@@ -1,0 +1,60 @@
+/* Tombol ganti bahasa (EN / ID) */
+.lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.2rem 0.35rem;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1.5px solid var(--pink-300);
+  box-shadow: var(--shadow-sm);
+}
+
+.lang__globe {
+  font-size: 0.85rem;
+  line-height: 1;
+  margin-inline: 0.15rem 0.1rem;
+}
+
+.lang__btn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0.28rem 0.6rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  color: var(--pink-700);
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+.lang__btn:hover {
+  background: var(--pink-100);
+}
+
+.lang__btn.is-active {
+  background: linear-gradient(135deg, var(--pink-400), var(--pink-600));
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(214, 58, 120, 0.28);
+}
+
+.lang__btn:focus-visible {
+  outline: 2px solid var(--pink-500);
+  outline-offset: 2px;
+}
+
+@media (max-width: 560px) {
+  .lang {
+    padding: 0.15rem 0.28rem;
+  }
+  .lang__globe {
+    display: none;
+  }
+  .lang__btn {
+    padding: 0.24rem 0.5rem;
+    font-size: 0.78rem;
+  }
+}

@@ -1,4 +1,4 @@
-import { foods, drinks } from "../data.js";
+import { useI18n } from "../i18n/useI18n.js";
 import Reveal from "./Reveal.jsx";
 import { Sparkle, HeartIcon } from "./Snoopy.jsx";
 
@@ -32,33 +32,34 @@ function FavGroup({ icon, title, subtitle, items }) {
 }
 
 export default function Favorites() {
+  const { t } = useI18n();
+  const foods = t("foods") ?? [];
+  const drinks = t("drinks") ?? [];
+
   return (
     <section id="favorit" className="section fav">
       <div className="container">
         <Reveal className="section-head">
           <span className="eyebrow">
-            <Sparkle className="eyebrow__spark" /> Favorit aku
+            <Sparkle className="eyebrow__spark" /> {t("favorites.eyebrow")}
           </span>
-          <h2>Makanan, Minuman &amp; Warna Favorit 🍪🩷</h2>
-          <p>
-            Aku tuh suka banget makanan manis, plus minuman yang bikin seger. Selain yang di bawah
-            ini, masih banyak lagi sih, hehe.
-          </p>
+          <h2>{t("favorites.title")}</h2>
+          <p>{t("favorites.subtitle")}</p>
         </Reveal>
 
         {/* 4 makanan favorit */}
         <FavGroup
           icon="🍽️"
-          title="Makanan Favorit"
-          subtitle="Dari yang manis sampai tradisional — semuanya juara!"
+          title={t("favorites.foodsTitle")}
+          subtitle={t("favorites.foodsSub")}
           items={foods}
         />
 
         {/* 3 minuman favorit */}
         <FavGroup
           icon="🧋"
-          title="Minuman Favorit"
-          subtitle="Tiga varian yang paling aku suka 💜"
+          title={t("favorites.drinksTitle")}
+          subtitle={t("favorites.drinksSub")}
           items={drinks}
         />
 
@@ -69,9 +70,9 @@ export default function Favorites() {
               <span key={shade} className="fav__swatch" style={{ background: shade }} />
             ))}
           </div>
-          <p className="fav__color-text">Warna favoritku: PINK 🩷</p>
+          <p className="fav__color-text">{t("favorites.colorTitle")}</p>
           <p className="fav__color-text" style={{ fontSize: "0.98rem", margin: 0 }}>
-            soft, hangat, dan selalu bikin senyum 🎀
+            {t("favorites.colorSub")}
           </p>
         </Reveal>
       </div>

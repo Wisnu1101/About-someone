@@ -5,8 +5,3 @@
   user-select: none;
   -webkit-user-drag: none;
 }
-
-/* Cadangan kalau masih pakai JPG berlatar putih: putihnya dibuat menyatu. */
-.snoopy-img--blend {
-  mix-blend-mode: multiply;
-}
